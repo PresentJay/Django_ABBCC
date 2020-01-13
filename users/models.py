@@ -6,6 +6,5 @@ from django.db import models
 
 class User(AbstractUser):
 
-    # bio =
     pass
 
