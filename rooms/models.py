@@ -88,4 +88,4 @@ class Room(core_models.TimeStampedModel):
     house_rules = models.ManyToManyField("HouseRule", blank=True)
     
     def __str__(self):
-        return self.names
+        return self.name
