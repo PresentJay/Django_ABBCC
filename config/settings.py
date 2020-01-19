@@ -46,6 +46,7 @@ PROJECT_APPS = [
     "rooms.apps.RoomsConfig",
     "reviews.apps.ReviewsConfig",
     "reservations.apps.ReservationsConfig",
+    "conversations.apps.ConversationsConfig"
     "lists.apps.ListsConfig",
 ]
 
