@@ -78,11 +78,10 @@ class RoomAdmin(admin.ModelAdmin):
     )
 
     def count_amenities(self, obj):
-        print(obj.amenities.all())
-        return "Potato"
+        return obj.amenities.count()
 
-    count_amenities.short_description = "hello sexy!"
-
+#    count_amenities.short_description = "hello sexy!"
+#       above functio modify field discription.
 
 @admin.register(models.Photo)
 class PhotoAdmin(admin.ModelAdmin):
