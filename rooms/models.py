@@ -79,7 +79,7 @@ class Room(core_models.TimeStampedModel):
     check_in = models.TimeField()
     check_out = models.TimeField()
     instant_book = models.BooleanField(default=False)
-    host = models.ForeignKey("users.User", on_delete=models.CASCADE) 
+    host = models.ForeignKey("users.User", related_name="rooms", on_delete=models.CASCADE) 
     #room points only one user (multi to one relation)
     
     room_type = models.ForeignKey("RoomType", on_delete=models.SET_NULL, null=True)
