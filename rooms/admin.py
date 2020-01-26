@@ -18,8 +18,6 @@ class ItemAdmin(admin.ModelAdmin):
     def used_by(self, obj):
         return obj.rooms.count()
 
-    pass
-
 
 class PhotoInline(admin.TabularInline):
     model = models.Photo
@@ -35,7 +33,7 @@ class RoomAdmin(admin.ModelAdmin):
     fieldsets = (
         (
             "Basic Info",
-            {"fields": ("name", "description", "country", "address", "price")},
+            {"fields": ("name", "description", "country", "city", "address", "price")},
         ),
         ("Times", {"fields": ("check_in", "check_out", "instant_book")}),
         ("Space", {"fields": ("guests", "beds", "bedrooms", "baths")}),
