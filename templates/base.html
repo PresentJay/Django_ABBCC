@@ -1,15 +1,19 @@
-<<!DOCTYPE html>
-    <html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 
-    <head>
-        <title></title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="css/style.css" rel="stylesheet">
-    </head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="css/style.css" rel="stylesheet">
+    <title>{% block page_name %}{% endblock page_name %} | Nbnb</title>
 
-    <body>
-        &copy; Nbnb
-    </body>
+</head>
 
-    </html>
+<body>
+    {% include 'partials/header.html' %}
+    {% block content %}{% endblock content %}
+    {% include 'partials/footer.html' %}
+    &copy; Nbnb
+</body>
+
+</html>
