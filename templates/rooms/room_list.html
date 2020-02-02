@@ -2,12 +2,25 @@
 
 {% block content %}
 
-{% for room in pages.object_list  %}
+{{now}}
+
+<!-- contents of page -->
+
+<!-- manual or django.paginator method -->
+<!-- {% for room in pages.object_list  %}
+<h1>{{room.name}} / ${{room.price}}</h1>
+{% endfor %} -->
+
+<!-- django.listview method -->
+{% for room in rooms %}
 <h1>{{room.name}} / ${{room.price}}</h1>
 {% endfor %}
 
+
+
 <!-- prev/next pagination -->
 
+<!-- ##### (fbv : funtion based view) -->
 <!-- manual method -->
 <!-- <h5>
         {% if page is not 1 %}
@@ -20,16 +33,31 @@
         <a href="?page={{page|add:1}}">Next</a>
         {% endif %}
     </h5> -->
-
 <!-- django.paginator method -->
-
-<h5>
+<!-- <h5>
     {% if pages.has_previous %}
     <a href='?page={{pages.previous_page_number}}'>Previous</a>
     {% endif %}
     Page {{pages.number}} of {{pages.paginator.num_pages}}
     {% if pages.has_next %}
     <a href='?page={{pages.next_page_number}}'>Next</a>
+    {% endif %}
+</h5> -->
+
+<!-- ##### (ccv : class based view) -->
+<!-- django.listview method -->
+<h5>
+    {% if page_obj.has_previous %}
+    <a href="?page={{page_obj.previous_page_number}}">[Prev]</a>
+    {% else %}
+    [Prev]
+    {% endif %}
+    Page {{page_obj.number}} of {{page_obj.paginator.num_pages}}
+
+    {% if page_obj.has_next %}
+    <a href="?page={{page_obj.next_page_number}}">[Next]</a>
+    {% else %}
+    [Next]
     {% endif %}
 </h5>
 
