@@ -1,39 +1,50 @@
 {% extends 'base.html' %}
 
-
-{% block page_name %}
-Home
-{% endblock page_name %}
-
-
 {% block content %}
 
-{% for room in rooms  %}
+{% for room in pages.object_list  %}
 <h1>{{room.name}} / ${{room.price}}</h1>
 {% endfor %}
 
+<!-- prev/next pagination -->
+
+<!-- manual method -->
+<!-- <h5>
+        {% if page is not 1 %}
+        <a href="?page={{page|add:-1}}">Previous</a>
+        {% endif %}
+
+        Page {{rooms.number}} of {{rooms.num_pages}}
+
+        {% if not page == page_count %}
+        <a href="?page={{page|add:1}}">Next</a>
+        {% endif %}
+    </h5> -->
+
+<!-- django.paginator method -->
 
 <h5>
-    {% if page is not 1 %}
-    <a href="?page={{page|add:-1}}">Previous</a>
+    {% if pages.has_previous %}
+    <a href='?page={{pages.previous_page_number}}'>Previous</a>
     {% endif %}
-
-    Page {{page}} of {{page_count}}
-
-    {% if not page == page_count %}
-    <a href="?page={{page|add:1}}">Next</a>
+    Page {{pages.number}} of {{pages.paginator.num_pages}}
+    {% if pages.has_next %}
+    <a href='?page={{pages.next_page_number}}'>Next</a>
     {% endif %}
 </h5>
 
 
-
-
 <!-- all numbering pagination -->
 
+<!-- manual method -->
 <!-- {% for page in page_range %}
-<a href="?page={{page}}">{{page}}</a>
-{% endfor %} -->
+    <a href="?page={{page}}">{{page}}</a>
+    {% endfor %} -->
 
-<!--  -->
+<!-- django.paginator method -->
+<!-- {% for page in rooms.paginator.page_range %}
+        {{page}} 
+    {% endfor %} -->
+
 
 {% endblock content %}
