@@ -1,5 +1,5 @@
 from django.utils import timezone
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 from django.http import Http404
 from django.shortcuts import render, redirect
 from django.urls import reverse
@@ -23,10 +23,19 @@ class HomeView(ListView):
         return context
 
 
-def room_detail(request, pk):
-    try:
-        room = models.Room.objects.get(pk=pk)
-        return render(request, "rooms/detail.html", {"room": room})
-    except models.Room.DoesNotExist:
-        # return redirect(reverse("core:home"))
-        raise Http404()
+# Function Based View method
+# def room_detail(request, pk):
+#     try:
+#         room = models.Room.objects.get(pk=pk)
+#         return render(request, "rooms/detail.html", {"room": room})
+#     except models.Room.DoesNotExist:
+#         # return redirect(reverse("core:home"))
+#         raise Http404()
+
+
+# Class Based View method (DetailView)
+class RoomDetail(DetailView):
+    
+    """ RoomDetail Definition """
+    
+    model = models.Room
