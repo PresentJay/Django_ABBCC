@@ -35,7 +35,13 @@ class HomeView(ListView):
 
 # Class Based View method (DetailView)
 class RoomDetail(DetailView):
-    
+
     """ RoomDetail Definition """
-    
+
     model = models.Room
+
+
+def search(request):
+    city = request.GET.get("city")
+    return render(request, "rooms/search.html", {"city": city.capitalize()})
+
