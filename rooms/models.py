@@ -93,20 +93,24 @@ class Room(core_models.TimeStampedModel):
     facilities = models.ManyToManyField("Facility", related_name="rooms", blank=True)
     house_rules = models.ManyToManyField("HouseRule", related_name="rooms", blank=True)
 
-    def save(self, *args, **kwargs):
-       self.city = str.capitalize(self.city)
-       super().save(*args, **kwargs)
-       
-    #save method in admin panel is "save_model"
-    
+    def get_absolute_url(self):
+        from django.urls import reverse
 
-    def __str__(self) :
+        return reverse("rooms:detail", kwargs={"pk": self.pk})
+
+    def save(self, *args, **kwargs):
+        self.city = str.capitalize(self.city)
+        super().save(*args, **kwargs)
+
+    # save method in admin panel is "save_model"
+
+    def __str__(self):
         return self.name
 
     def total_rating(self):
         all_reviews = self.reviews.all()
         all_ratings = 0
-        
+
         if len(all_reviews) == 0:
             return 0
         else:
