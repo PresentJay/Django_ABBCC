@@ -53,6 +53,8 @@ def search(request):
     beds = int(request.GET.get("beds", 0))
     baths = int(request.GET.get("baths", 0))
     amenities = models.Amenity.objects.all()
+    instant = request.GET.get("instant", False)
+    superhost = request.GET.get("instant", False)
     facilities = models.Facility.objects.all()
     s_amenities = request.GET.get("amenities")
     s_facilities = request.GET.get("facilities")
@@ -64,8 +66,12 @@ def search(request):
         "price": price,
         "guests": guests,
         "bedrooms": bedrooms,
+        "s_amenities": s_amenities,
+        "s_facilites": s_facilities,
         "beds": beds,
         "baths": baths,
+        "instant": instant,
+        "superhost": superhost,
     }
 
     choices = {
@@ -75,4 +81,17 @@ def search(request):
         "facilities": facilities,
     }
 
-    return render(request, "rooms/search.html", {**form, **choices},)
+    filter_args = {}
+
+    if city != "Anywhere":
+        filter_args["city__startswith"] = city
+
+    filter_args["country"] = country
+
+    if room_type != 0:
+        filter_args["room_type__pk"] = room_type
+        # cause it's foreign key
+
+    rooms = models.Room.objects.filter(**filter_args)
+
+    return render(request, "rooms/search.html", {**form, **choices, "rooms": rooms},)

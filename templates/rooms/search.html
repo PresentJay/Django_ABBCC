@@ -66,6 +66,19 @@ Search
         <input value="{{baths}}" type="number" name="baths" id="baths" placeholder="Baths">
     </div>
 
+
+    <div>
+        <label for="instant">Instant Book Only?</label>
+        <input type="checkbox" name='instant' id='instant' placeholder="instant" {% if instant %} checked {% endif %}>
+    </div>
+
+    <div>
+        <label for="super_host">By Superhost Only?</label>
+        <input type="checkbox" name='super_host' id='super_host' placeholder="super_host" {% if superhost %} checked
+            {% endif %}>
+    </div>
+
+
     <div>
         <h3>Amenities</h3>
         <ul>
@@ -90,9 +103,18 @@ Search
         </ul>
     </div>
 
+
     <button>Search</button>
 
     <!-- if button exist just one on a form, it works like submit. -->
 </form>
+
+<h3>Results</h3>
+
+
+{% for room in rooms  %}
+<h3>{{room.name}}</h3>
+{% endfor %}
+
 
 {% endblock content %}
