@@ -53,7 +53,6 @@ class SearchView(View):
 
                 if room_type is not None:
                     filter_args["room_type"] = room_type
-                    # cause it's foreign key
 
                 if price is not None:
                     filter_args["price_lte"] = price
@@ -88,8 +87,14 @@ class SearchView(View):
                 page = request.GET.get("page", 1)
                 rooms = paginator.page(int(page))
 
+                urlencode = request.GET.urlencode()
+                page_filter = [i for i in urlencode.split("&") if "page=" not in i]
+                url_address = "&".join(page_filter)
+
                 return render(
-                    request, "rooms/search.html", {"form": form, "rooms": rooms}
+                    request,
+                    "rooms/search.html",
+                    {"form": form, "rooms": rooms, "query_string": url_address,},
                 )
         else:
             # this calls forms without validation

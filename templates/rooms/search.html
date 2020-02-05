@@ -27,4 +27,19 @@ Search
 <h3>{{room.name}}</h3>
 {% endfor %}
 
+<h5>
+    {% if rooms.has_previous %}
+    <a href="?{{query_string}}&page={{rooms.previous_page_number}}">[Prev]</a>
+    {% else %}
+    [Prev]
+    {% endif %}
+    Page {{rooms.number}} of {{rooms.paginator.num_pages}}
+
+    {% if rooms.has_next %}
+    <a href="?{{query_string}}&page={{rooms.next_page_number}}">[Next]</a>
+    {% else %}
+    [Next]
+    {% endif %}
+</h5>
+
 {% endblock content %}
