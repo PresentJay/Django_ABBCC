@@ -1,9 +1,6 @@
-from django.utils import timezone
 from django.views.generic import ListView, DetailView, View
-from django.http import Http404
 from django.shortcuts import render, redirect
-from django.urls import reverse
-from django_countries import countries
+from django.core.paginator import Paginator
 from . import models, forms
 
 
@@ -17,22 +14,6 @@ class HomeView(ListView):
     ordering = "created"
     context_object_name = "rooms"
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        now = timezone.now()
-        context["now"] = now
-        return context
-
-
-# Function Based View method
-# def room_detail(request, pk):
-#     try:
-#         room = models.Room.objects.get(pk=pk)
-#         return render(request, "rooms/detail.html", {"room": room})
-#     except models.Room.DoesNotExist:
-#         # return redirect(reverse("core:home"))
-#         raise Http404()
-
 
 # Class Based View method (DetailView)
 class RoomDetail(DetailView):
@@ -40,10 +21,9 @@ class RoomDetail(DetailView):
     """ RoomDetail Definition """
 
     model = models.Room
-    
+
 
 class SearchView(View):
-    
     def get(self, request):
         country = request.GET.get("country")
 
@@ -102,9 +82,19 @@ class SearchView(View):
                 for facility in facilities:
                     filter_args["facilities"] = facility
 
-                rooms = models.Room.objects.filter(**filter_args)
-                return render(request, "rooms/search.html", {"form": form, "rooms": rooms})
+                qs = models.Room.objects.filter(**filter_args).order_by("-created")
+
+                paginator = Paginator(qs, 10, orphans=5)
+
+                page = request.GET.get("page", 1)
+
+                rooms = paginator.get_page(page)
+
+                return render(
+                    request, "rooms/search.html", {"form": form, "rooms": rooms}
+                )
         else:
             # this calls forms without validation
             form = forms.SearchForm()
-            return render(request, "rooms/search.html", {"form": form})
+
+        return render(request, "rooms/search.html", {"form": form})
