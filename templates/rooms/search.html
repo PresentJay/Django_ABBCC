@@ -85,7 +85,8 @@ Search
             {% for amenity in amenities %}
             <li>
                 <label for="a_{{amenity.pk}}"> {{amenity.name}}</label>
-                <input id='a_{{amenity.pk}}' name="a_{{amenity.pk}}" type="checkbox" value='{{amenitiy.pk}}' />
+                <input id='a_{{amenity.pk}}' name="amenities" type="checkbox" value={{amenity.pk}}
+                    {% if amenity.pk|slugify in s_amenities %} checked {% endif %} />
             </li>
             {% endfor %}
         </ul>
@@ -97,7 +98,8 @@ Search
             {% for facility in facilities  %}
             <li>
                 <label for="f_{{facility.pk}}"> {{facility.name}}</label>
-                <input id='f_{{facility.pk}}' name='facilities' type="checkbox" value={{facility.pk}} />
+                <input id='f_{{facility.pk}}' name='facilities' type="checkbox" value={{facility.pk}}
+                    {% if facility.pk|slugify in s_facilities %} checked {% endif %} />
             </li>
             {% endfor %}
         </ul>

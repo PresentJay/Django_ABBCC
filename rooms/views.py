@@ -56,8 +56,8 @@ def search(request):
     instant = bool(request.GET.get("instant", False))
     superhost = bool(request.GET.get("superhost", False))
     facilities = models.Facility.objects.all()
-    s_amenities = request.GET.get("amenities")
-    s_facilities = request.GET.get("facilities")
+    s_amenities = request.GET.getlist("amenities")
+    s_facilities = request.GET.getlist("facilities")
 
     form = {
         "city": city.capitalize(),
@@ -67,7 +67,7 @@ def search(request):
         "guests": guests,
         "bedrooms": bedrooms,
         "s_amenities": s_amenities,
-        "s_facilites": s_facilities,
+        "s_facilities": s_facilities,
         "beds": beds,
         "baths": baths,
         "instant": instant,
@@ -113,15 +113,13 @@ def search(request):
     if superhost is True:
         filter_args["host__superhost"] = True
 
-    print(s_amenities)
-
-    """ if len(s_amenities) > 0:
+    if len(s_amenities) > 0:
         for s_amenity in s_amenities:
             filter_args["amenities__pk"] = int(s_amenity)
 
     if len(s_facilities) > 0:
         for s_facility in s_facilities:
-            filter_args["facilities__pk"] = int(s_facility) """
+            filter_args["facilities__pk"] = int(s_facility)
 
     rooms = models.Room.objects.filter(**filter_args)
 
