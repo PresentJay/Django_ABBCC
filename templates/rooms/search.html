@@ -73,8 +73,8 @@ Search
     </div>
 
     <div>
-        <label for="super_host">By Superhost Only?</label>
-        <input type="checkbox" name='super_host' id='super_host' placeholder="super_host" {% if superhost %} checked
+        <label for="superhost">By Superhost Only?</label>
+        <input type="checkbox" name='superhost' id='superhost' placeholder="superhost" {% if superhost %} checked
             {% endif %}>
     </div>
 
@@ -85,7 +85,7 @@ Search
             {% for amenity in amenities %}
             <li>
                 <label for="a_{{amenity.pk}}"> {{amenity.name}}</label>
-                <input id='a_{{amenity.pk}}' name="amenities" type="checkbox" value='{{amenitiy.pk}}' />
+                <input id='a_{{amenity.pk}}' name="a_{{amenity.pk}}" type="checkbox" value='{{amenitiy.pk}}' />
             </li>
             {% endfor %}
         </ul>
