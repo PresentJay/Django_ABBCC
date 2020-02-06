@@ -6,8 +6,17 @@ Log In
 {% endblock page_title %}
 
 
+{% block search-bar %}
+{% endblock search-bar %}
+
+
 {% block content %}
 
-<h2>Hello</h2>
+<form method='POST' action="{% url 'users:login' %}">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button>Login</button>
+
+</form>
 
 {% endblock content %}
