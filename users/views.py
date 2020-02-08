@@ -51,12 +51,13 @@ class LoginView(FormView):
                 return redirect(reverse("core:home"))
 
         return render(request, "users/login.html", {"form": form,})
+ """
 
 
 def log_out(request):
     logout(request)
     return redirect(reverse("core:home"))
- """
+
 
 """ as in FBV, it'll be like this below """
 
@@ -65,3 +66,10 @@ def log_out(request):
         pass
     elif request.method == 'POST':
         pass """
+
+
+class SignUpView(FormView):
+    template_name = "users/signup.html"
+    form_class = forms.SignUpForm
+    # urls will be not called, so uses "lazy"
+    success_url = reverse_lazy("core:home")
