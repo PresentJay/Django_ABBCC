@@ -22,7 +22,8 @@ class LoginForm(forms.Form):
             self.add_error("email", forms.ValidationError("User does not exist"))
 
 
-class SignUpForm(forms.Form):
+# before modelform - manual way
+""" class SignUpForm(forms.Form):
     first_name = forms.CharField(max_length=80)
     last_name = forms.CharField(max_length=80)
     email = forms.EmailField()
@@ -56,4 +57,39 @@ class SignUpForm(forms.Form):
         user = models.User.objects.create_user(email, email, password)
         user.first_name = first_name
         user.last_name = last_name
+        user.save() """
+
+# tricking modelform
+class SignUpForm(forms.ModelForm):
+
+    # this below class 'meta' have own save-method
+    class Meta:
+        model = models.User
+        fields = [
+            "first_name",
+            "last_name",
+            "email",
+        ]
+
+    password = forms.CharField(widget=forms.PasswordInput)
+    password1 = forms.CharField(widget=forms.PasswordInput, label="Conform Password")
+
+    def clean_password1(self):
+        password = self.cleaned_data.get("password")
+        password1 = self.cleaned_data.get("password1")
+
+        if password != password1:
+            raise forms.ValidationError("Password confirmation does not match")
+        else:
+            return password
+
+    def save(self, *args, **kwrgs):
+        user = super().save(commit=False)
+        email = self.cleaned_data.get("email")
+        password = self.cleaned_data.get("password")
+        # commit=False do not saves on django database immediately.
+        # because of making of username
+
+        user.username = email
+        user.set_password(password)
         user.save()
