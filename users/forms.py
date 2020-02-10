@@ -23,7 +23,7 @@ class LoginForm(forms.Form):
 
 
 # before modelform - manual way
-""" class SignUpForm(forms.Form):
+class SignUpForm(forms.Form):
     first_name = forms.CharField(max_length=80)
     last_name = forms.CharField(max_length=80)
     email = forms.EmailField()
@@ -57,10 +57,11 @@ class LoginForm(forms.Form):
         user = models.User.objects.create_user(email, email, password)
         user.first_name = first_name
         user.last_name = last_name
-        user.save() """
+        user.save()
+
 
 # tricking modelform
-class SignUpForm(forms.ModelForm):
+""" class SignUpForm(forms.ModelForm):
 
     # this below class 'meta' have own save-method
     class Meta:
@@ -93,3 +94,4 @@ class SignUpForm(forms.ModelForm):
         user.username = email
         user.set_password(password)
         user.save()
+ """

@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "253d934c6ab4a9976ecacf419ecfadf2216a5eb0cceb7080bfb107190bc75ca4"
+            "sha256": "a43d7d0e805608d7ab232ed0a6e40ad278e0faed468008871ca56dc8e2476c21"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -32,12 +32,20 @@
             "index": "pypi",
             "version": "==5.5"
         },
-        "django-seed": {
+        "django-dotenv": {
             "hashes": [
-                "sha256:da5dc54494c2d4274a6b9f9a2aea69cb15c3cce80777e2d30b3a5a082c0a7ee8"
+                "sha256:3812bb0f4876cf31f902aad140f0645e120e51ee30eb7c40c22050f58a0e4adb",
+                "sha256:a9b1b40a70bd321acd231926acedb9bd2c5e873e33a1873b34a7276d196a765e"
             ],
             "index": "pypi",
-            "version": "==0.1.9"
+            "version": "==1.4.2"
+        },
+        "django-seed": {
+            "hashes": [
+                "sha256:5cdda71dcd51b2e7340e4aec9035d99d7014409a4b11adddbdff17d814968221"
+            ],
+            "index": "pypi",
+            "version": "==0.2.2"
         },
         "faker": {
             "hashes": [
