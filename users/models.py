@@ -4,6 +4,7 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.core.mail import send_mail
 from django.utils.html import strip_tags
+from django.template.loader import render_to_string
 
 # Create your models here.
 
@@ -53,7 +54,9 @@ class User(AbstractUser):
         if self.email_confirmed is False:
             secret = uuid.uuid4().hex[:20]
             self.email_secret = secret
-            html_message = f"To verify yout account, click <a href='http://127.0.0.1:8000/users/verify/{secret}'>here<a>"
+            html_message = render_to_string(
+                "emails/verify_email.html", {"secret": secret}
+            )
             send_mail(
                 "Verify Airbnb Account",
                 strip_tags(html_message),
@@ -62,6 +65,7 @@ class User(AbstractUser):
                 fail_silently=False,
                 html_message=html_message,
             )
+            self.save()
         return
 
     def __str__(self):
