@@ -12,7 +12,7 @@ Log In
 
 {% block content %}
 
-{% include 'parcials/social_login.html' %}
+{% include 'partials/social_login.html' %}
 
 <form method='POST' action="{% url 'users:login' %}">
     {% csrf_token %}

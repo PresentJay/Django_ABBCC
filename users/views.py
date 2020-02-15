@@ -1,4 +1,5 @@
 import os
+import requests
 from django.views import View
 from django.shortcuts import render, redirect, reverse
 from django.urls import reverse_lazy
@@ -108,7 +109,7 @@ def complete_verification(request, key):
 
 
 def github_login(request):
-    clent_id = os.environ.get("GITHUB_ID")
+    client_id = os.environ.get("GITHUB_ID")
     redirect_uri = "http://127.0.0.1:8000/users/login/github/callback"
     return redirect(
         f"https://github.com/login/oauth/authorize?client_id={client_id}&redirect_uri={redirect_uri}&scope=read:user"
@@ -116,4 +117,15 @@ def github_login(request):
 
 
 def github_callback(request):
-    pass
+    code = request.GET.get("code")
+    if code is not None:
+        client_id = os.environ.get("GITHUB_ID")
+        client_secret = os.environ.get("GITHUB_SECRET")
+        request = requests.post(
+            f"https://github.com/login/oauth/access_token?id={{client_id}}&client_secret={{client_secret}}&code={{code}}",
+            headers={"Accept": "application/json"},
+        )
+        print(request.json())
+    else:
+        return redirect(reverse("core:home"))
+
