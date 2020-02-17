@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib.auth.forms import UserCreationForm
 from . import models
 
 
@@ -22,8 +23,18 @@ class LoginForm(forms.Form):
             self.add_error("email", forms.ValidationError("User does not exist"))
 
 
+# using UserCreationForm
+class SignUpForm(UserCreationForm):
+
+    username = forms.EmailField(label="Email")
+
+    class Meta:
+        model = models.User
+        fields = ("email",)
+
+
 # before modelform - manual way
-class SignUpForm(forms.Form):
+""" class SignUpForm(forms.Form):
     first_name = forms.CharField(max_length=80)
     last_name = forms.CharField(max_length=80)
     email = forms.EmailField()
@@ -57,7 +68,7 @@ class SignUpForm(forms.Form):
         user = models.User.objects.create_user(email, email, password)
         user.first_name = first_name
         user.last_name = last_name
-        user.save()
+        user.save() """
 
 
 # tricking modelform
