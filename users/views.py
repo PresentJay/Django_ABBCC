@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect, reverse
 from django.urls import reverse_lazy
 from django.contrib.auth import authenticate, login, logout
 from django.views.generic import FormView
-
+from django.core.files.base import ContentFile
 from . import forms
 from . import models
 
@@ -231,6 +231,15 @@ def kakao_callback(request):
             )
             user.set_unusable_password()
             user.save()
+            if profile_image is not None:
+                photo_request = requests.get(profile_image)
+                user.avatar.save(
+                    f"{nickname}-avatar.png", ContentFile(photo_request.content)
+                )
+                # second parameter(contents) is 'File',
+                # photo_request.content() is full of binary numbers(0,1)
+                # through ContentFile, those binary codes be raw type file.
+
         login(request, user)
         return redirect(reverse("core:home"))
     except KakaoException:
