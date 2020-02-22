@@ -1,0 +1,16 @@
+{
+  "name": "django_abbcc",
+  "version": "1.0.0",
+  "description": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PresentJay/Django_ABBCC.git"
+  },
+  "homepage": "https://github.com/PresentJay/Django_ABBCC#readme",
+  "devDependencies": {
+    "gulp": "^4.0.2"
+  },
+  "dependencies": {
+    "gulp-cli": "^2.2.0"
+  }
+}

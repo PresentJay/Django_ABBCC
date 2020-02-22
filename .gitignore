@@ -128,5 +128,14 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
+/node_modules
+/lib
+/example
+index.html
+package-lock.json
+yarn-error.log
+
+
+
 # in project
 uploads/
