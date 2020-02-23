@@ -8,12 +8,16 @@
   },
   "homepage": "https://github.com/PresentJay/Django_ABBCC#readme",
   "devDependencies": {
+    "autoprefixer": "^9.7.4",
     "gulp": "^4.0.2",
     "gulp-csso": "^4.0.1",
     "gulp-postcss": "^8.0.0",
     "gulp-sass": "^4.0.2",
     "node-sass": "^4.13.1",
     "tailwindcss": "^1.2.0"
+  },
+  "scripts": {
+    "css": "gulp"
   },
   "dependencies": {
     "gulp-cli": "^2.2.0"
