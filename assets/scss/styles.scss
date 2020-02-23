@@ -1,10 +1,23 @@
 @tailwind base;
 @tailwind components;
-@tailwind utilities;
-
-html {
-    font-size: 16px;
-}
 
 // rem means root - em ( em is related with the closest font-size, 0.5em means half size of the closest font-size, 2em means double size of the closest font-size )
 // root - em means, not related with the closest font-size, it just related with roots, exactly "html" font-size.
+
+.search-box {
+    transition: box-shadow 0.3s linear;
+}
+
+.nav_link {
+    @apply ml-8 font-semibold border-b-2 border-white h-full flex items-center;
+
+    a {
+        @apply py-10 px-5;
+    }
+
+    &:hover {
+        @apply border-gray-600
+    }
+}
+
+@tailwind utilities;
