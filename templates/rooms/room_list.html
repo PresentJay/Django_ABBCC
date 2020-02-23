@@ -6,10 +6,39 @@ room lists
 
 {% block content %}
 
-<div class='container rounded-xl mx-auto bg-gray-800 h-50vh mt-32 mb-24 bg-cover bg-center'
-    style='background-image:url(https://images.unsplash.com/photo-1570192107423-6f700661172d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80)'>
+<div class="container mx-auto">
+
+    <div class='container rounded-xl bg-gray-800 h-50vh mt-32 mb-24 bg-cover bg-center'
+        style='background-image:url(https://images.unsplash.com/photo-1570192107423-6f700661172d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80)'>
+    </div>
+
+    <div class='flex flex-wrap -mx-40'>
+        {% for room in rooms %}
+        {% include 'partials/room_card.html' with room=room %}
+        {% endfor %}
+    </div>
+
+    <h5>
+        {% if page_obj.has_previous %}
+        <a href="?page={{page_obj.previous_page_number}}">[Prev]</a>
+        {% else %}
+        [Prev]
+        {% endif %}
+
+        Page {{page_obj.number}} of {{page_obj.paginator.num_pages}}
+
+        {% if page_obj.has_next %}
+        <a href="?page={{page_obj.next_page_number}}">[Next]</a>
+        {% else %}
+        [Next]
+        {% endif %}
+    </h5>
 
 </div>
+
+{% endblock content %}
+
+
 
 <!-- contents of page -->
 
@@ -19,13 +48,7 @@ room lists
 {% endfor %} -->
 
 <!-- django.listview method -->
-{% for room in rooms %}
-<h4>
-    <a href='{% url "rooms:detail" room.pk %}'>
-        {{room.name}} / ${{room.price}}
-    </a>
-</h4>
-{% endfor %}
+
 
 
 
@@ -57,22 +80,6 @@ room lists
 
 <!-- ##### (ccv : class based view) -->
 <!-- django.listview method -->
-<h5>
-    {% if page_obj.has_previous %}
-    <a href="?page={{page_obj.previous_page_number}}">[Prev]</a>
-    {% else %}
-    [Prev]
-    {% endif %}
-
-    Page {{page_obj.number}} of {{page_obj.paginator.num_pages}}
-
-    {% if page_obj.has_next %}
-    <a href="?page={{page_obj.next_page_number}}">[Next]</a>
-    {% else %}
-    [Next]
-    {% endif %}
-</h5>
-
 
 <!-- all numbering pagination -->
 
@@ -85,6 +92,3 @@ room lists
 <!-- {% for page in rooms.paginator.page_range %}
         {{page}} 
     {% endfor %} -->
-
-
-{% endblock content %}

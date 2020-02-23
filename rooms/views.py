@@ -83,7 +83,7 @@ class SearchView(View):
 
                 qs = models.Room.objects.filter(**filter_args).order_by("-created")
 
-                paginator = Paginator(qs, 10, orphans=5)
+                paginator = Paginator(qs, 12, orphans=4)
                 page = request.GET.get("page", 1)
                 rooms = paginator.page(int(page))
 
