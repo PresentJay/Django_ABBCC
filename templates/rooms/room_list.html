@@ -8,7 +8,7 @@ room lists
 
 <div class="container mx-auto">
 
-    <div class='container rounded-xl bg-gray-800 h-50vh mt-32 mb-24 bg-cover bg-center'
+    <div class='rounded-xl bg-gray-800 h-50vh mt-32 mb-24 bg-cover bg-center -mx-40'
         style='background-image:url(https://images.unsplash.com/photo-1570192107423-6f700661172d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80)'>
     </div>
 
@@ -18,7 +18,7 @@ room lists
         {% endfor %}
     </div>
 
-    <h5>
+    <div class='items-center'>
         {% if page_obj.has_previous %}
         <a href="?page={{page_obj.previous_page_number}}">[Prev]</a>
         {% else %}
@@ -32,7 +32,7 @@ room lists
         {% else %}
         [Next]
         {% endif %}
-    </h5>
+    </div class='items-center'>
 
 </div>
 
