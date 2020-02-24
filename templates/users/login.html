@@ -16,7 +16,7 @@ Log In
 
     {% include 'partials/social_login.html' %}
 
-    <form method='POST' action="{% url 'users:login' %}" class="w-full">
+    <form method='POST' action="{% url 'users:login' %}">
         {% csrf_token %}
         <input type="email" placeholder="Email" class="mb-3">
         <input type="password" placeholder="Password" class="mb-3">
