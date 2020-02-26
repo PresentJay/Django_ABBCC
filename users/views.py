@@ -204,18 +204,21 @@ def kakao_callback(request):
 
         if error is not None:
             raise KakaoException()
+
         access_token = token_json.get("access_token")
-        profile_request = requests.get(
-            "https://kapi.kakao.com/v1/user/me",
+        kakao_request = requests.get(
+            "https://kapi.kakao.com/v2/user/me",
             headers={"Authorization": f"Bearer {access_token}"},
         )
-        profile_json = profile_request.json()
-        email = profile_json.get("kaccount_email", None)
+        kakao_json = kakao_request.json().get("kakao_account")
+        # print(kakao_json)
+        profile_json = kakao_json.get("profile")
+        # print(profile_json)
+        email = kakao_json.get("email", None)
         if email is None:
             raise KakaoException()
-        properties = profile_json.get("properties")
-        nickname = properties.get("nickname")
-        profile_image = properties.get("profile_image")
+        nickname = profile_json.get("nickname")
+        profile_image = profile_json.get("profile_image_url")
         try:
             user = models.User.objects.get(email=email)
             if user.login_method != models.User.LOGIN_KAKAO:
@@ -239,7 +242,9 @@ def kakao_callback(request):
                 # photo_request.content() is full of binary numbers(0,1)
                 # through ContentFile, those binary codes be raw type file.
 
+        print("signup done")
         login(request, user)
         return redirect(reverse("core:home"))
+
     except KakaoException:
         return redirect(reverse("users:login"))
