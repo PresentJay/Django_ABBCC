@@ -61,7 +61,6 @@ class SignUpForm(forms.ModelForm):
         password = self.cleaned_data.get("password")
         # commit=False do not saves on django database immediately.
         # because of making of username
-
         user.username = email
         user.set_password(password)
         user.save()

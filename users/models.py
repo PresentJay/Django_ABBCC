@@ -68,7 +68,7 @@ class User(AbstractUser):
             secret = uuid.uuid4().hex[:20]
             self.email_secret = secret
             html_message = render_to_string(
-                "partials/emails/verify_email.html", {"secret": secret}
+                "emails/verify_email.html", {"secret": secret}
             )
             send_mail(
                 "Verify Airbnb Account",
