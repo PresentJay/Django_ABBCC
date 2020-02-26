@@ -4,6 +4,7 @@ from django.views import View
 from django.shortcuts import render, redirect, reverse
 from django.urls import reverse_lazy
 from django.contrib.auth import authenticate, login, logout
+from django.contrib import messages
 from django.views.generic import FormView
 from django.core.files.base import ContentFile
 from . import forms, models
@@ -132,7 +133,7 @@ def github_callback(request):
             token_json = token_request.json()
             error = token_json.get("error", None)
             if error is not None:
-                raise GithubException()
+                raise GithubException("Can't get access token")
             else:
                 access_token = token_json.get("access_token")
                 api_request = requests.get(
@@ -151,7 +152,9 @@ def github_callback(request):
                     try:
                         user = models.User.objects.get(email=email)
                         if user.login_method != models.User.LOGIN_GITHUB:
-                            raise GithubException()
+                            raise GithubException(
+                                f"Please log in with: {user.login_method}"
+                            )
                     except models.User.DoesNotExist:
                         user = models.User.objects.create(
                             email=email,
@@ -167,14 +170,16 @@ def github_callback(request):
                     # request is parameter of github_callback method.
                     # this is very important. request must be unchanged.
                     # if once request is changed, you can't use login method
+
+                    messages.success(request, f"Welcome back {user.first_name}")
+
                     return redirect(reverse("core:home"))
                 else:
-                    return redirect(reverse("users:login"))
-
+                    raise GithubException("Can't get your profile")
         else:
-            raise GithubException()
-    except GithubException:
-        # send error message
+            raise GithubException("Can't get code")
+    except GithubException as e:
+        messages.error(request, e)
         return redirect(reverse("users:login"))
 
 
@@ -203,7 +208,7 @@ def kakao_callback(request):
         error = token_json.get("error", None)
 
         if error is not None:
-            raise KakaoException()
+            raise KakaoException("Cant get authorization code")
 
         access_token = token_json.get("access_token")
         kakao_request = requests.get(
@@ -211,18 +216,16 @@ def kakao_callback(request):
             headers={"Authorization": f"Bearer {access_token}"},
         )
         kakao_json = kakao_request.json().get("kakao_account")
-        # print(kakao_json)
         profile_json = kakao_json.get("profile")
-        # print(profile_json)
         email = kakao_json.get("email", None)
         if email is None:
-            raise KakaoException()
+            raise KakaoException("Please also give me your email")
         nickname = profile_json.get("nickname")
         profile_image = profile_json.get("profile_image_url")
         try:
             user = models.User.objects.get(email=email)
             if user.login_method != models.User.LOGIN_KAKAO:
-                raise KakaoException()
+                raise KakaoException(f"Please log in with: {user.login_method}")
         except models.User.DoesNotExist:
             user = models.User.objects.create_user(
                 email=email,
@@ -242,9 +245,12 @@ def kakao_callback(request):
                 # photo_request.content() is full of binary numbers(0,1)
                 # through ContentFile, those binary codes be raw type file.
 
-        print("signup done")
         login(request, user)
+
+        messages.success(request, f"Welcome back {user.first_name}")
+
         return redirect(reverse("core:home"))
 
-    except KakaoException:
+    except KakaoException as e:
+        messages.error(request, e)
         return redirect(reverse("users:login"))
