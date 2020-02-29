@@ -22,7 +22,7 @@
 
 
         {% if user == user_obj %}
-        <a href="#" class='btn bg-red-500 btn--small text-white'>Edit Profile</a>
+        <a href="{% url 'users:update-profile' %}" class='btn bg-red-500 btn--small text-white'>Edit Profile</a>
         {% endif %}
     </div>
 
