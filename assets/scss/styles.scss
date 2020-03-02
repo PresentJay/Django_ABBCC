@@ -35,7 +35,7 @@
 input,
 textarea,
 select {
-    @apply rounded-sm py-5 text-lg font-light w-full font-semibold text-left border border-gray-600 px-5;
+    @apply rounded-sm py-5 text-lg font-light w-full .font-normal text-left border border-gray-600 px-5;
 
     &:focus {
         @apply outline-none border-teal-500;
@@ -44,6 +44,8 @@ select {
 
 select {
     height: 50px;
+    padding-top: 0.75rem !important;
+    padding-bottom: 0.75rem !important;
 }
 
 
