@@ -34,9 +34,10 @@ class LoginView(mixins.LoggedOutOnlyView, FormView):
     def get_success_url(self):
         next_arg = self.request.GET.get("next")
         if next_arg is not None:
+            print(next_arg)
             return next_arg
         else:
-            success_url = reverse("core:home")
+            return reverse("core:home")
 
 
 # difference of this custom-view and loginview
@@ -328,9 +329,7 @@ class UpdatePasswordView(
     success_message = "Password updated"
 
     def get_success_url(self):
-
-        url = super().get_success_url()
-
+        # url = super().get_success_url()
         return self.request.user.get_absolute_url()
 
     def get_form(self, form_class=None):

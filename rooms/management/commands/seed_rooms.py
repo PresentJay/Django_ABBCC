@@ -51,11 +51,11 @@ class Command(BaseCommand):
             room = room_models.Room.objects.get(pk=pk)
 
             # add randomized photo
-            for i in range(2, random.randint(3, 6)):
+            for i in range(2, random.randint(4, 8)):
                 room_models.Photo.objects.create(
                     caption=seeder.faker.sentence(),
                     room=room,
-                    file=f"room_photos/{random.randint(1,7)}.jpg",
+                    file=f"room_photos/{random.randint(1,51)}.jpg",
                 )
 
             # the methods of below are about "many to many field"
