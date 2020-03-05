@@ -1,6 +1,7 @@
 from django.views.generic import ListView, DetailView, View, UpdateView
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import render, redirect, reverse
 from django.core.paginator import Paginator
 from django.http import Http404
@@ -154,6 +155,7 @@ class RoomPhotosView(user_mixins.LoggedInOnlyView, DetailView):
 @login_required
 def delete_photo(request, room_pk, photo_pk):
     user = request.user
+    messages.error(request, "photo deleted")
     try:
         room = models.Room.objects.get(pk=room_pk)
         if room.host.pk != user.pk:
@@ -163,3 +165,15 @@ def delete_photo(request, room_pk, photo_pk):
             return redirect(reverse("rooms:edit-photos", kwargs={"pk": room_pk}))
     except models.Room.DoesNotExist:
         return redirect(reverse("core:home"))
+
+
+class EditPhotoView(user_mixins.LoggedInOnlyView, SuccessMessageMixin, UpdateView):
+    model = models.Photo
+    template_name = "rooms/photo_edit.html"
+    pk_url_kwarg = "photo_pk"
+    success_message = "photo updated"
+    fields = ("caption",)
+
+    def get_success_url(self):
+        room_pk = self.kwargs.get("room_pk")
+        return reverse("rooms:edit-photos", kwargs={"pk": room_pk})
