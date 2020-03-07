@@ -34,7 +34,9 @@ class CreatePhotoForm(forms.ModelForm):
         model = models.Photo
         fields = ("file", "caption")
 
+    # intercepting save method for add room's primary key on each photo
     def save(self, pk, *args, **kwargs):
-        room = models.Room.objects.get(pk=pk)
-
         photo = super().save(commit=False)
+        room = models.Room.objects.get(pk=pk)
+        photo.room = room
+        photo.save()
