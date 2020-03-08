@@ -33,6 +33,10 @@
 
     {% endfor %}
 
+
+    {% include 'mixins/modal.html' %}
+
+
     <div class="flex justify-center mt-5">
         <a href="{% url 'rooms:edit' room.pk %}" class="text-teal-500 font-medium text-xl">Back to Edit-room</a>
     </div>

@@ -14,8 +14,6 @@ django-countries = "*"
 django-seed = "*"
 django-dotenv = "*"
 requests = "*"
-django-bootstrap-modal-forms = "*"
-django-widget-tweaks = "*"
 
 [requires]
 python_version = "3.7"
