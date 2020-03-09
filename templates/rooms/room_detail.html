@@ -94,10 +94,15 @@
     <div class="w-1/3">
 
         {% if room.host == user %}
-        <a href="{% url 'rooms:edit' room.pk %}" class="btn-link block">Edit Room</a>
+        <a href="{% url 'rooms:edit' room.pk %}" class="btn-link block mb-5 bg-teal-500">Edit Room</a>
+        <button class="modal-open btn-link bg-red-600">Delete Room</button>
+        {% include 'mixins/room-delete-modal.html' with room=room.pk %}
+
         {% endif %}
 
     </div>
 </div>
+
+<script src="/static/js/modal.js"></script>
 
 {% endblock content %}

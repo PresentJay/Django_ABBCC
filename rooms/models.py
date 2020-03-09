@@ -119,9 +119,15 @@ class Room(core_models.TimeStampedModel):
             return round(all_ratings / len(all_reviews), 2)
 
     def first_photo(self):
-        (photo,) = self.photos.all()[:1]  # unpacking in python
-        return photo.file.url
+        if self.photos.count() > 0:
+            (photo,) = self.photos.all()[:1]  # unpacking in python
+            return photo.file.url
+        else:
+            return "/static/img/blank_img.png"
 
     def get_next_four_photos(self):
-        photos = self.photos.all()[1:5]
-        return photos
+        if self.photos.count() > 0:
+            photos = self.photos.all()[1:5]
+            return photos
+        else:
+            return None

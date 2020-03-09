@@ -174,6 +174,21 @@ def delete_photo(request, room_pk, photo_pk):
         return redirect(reverse("core:home"))
 
 
+@login_required
+def delete_room(request, room_pk):
+    user = request.user
+    messages.error(request, "room deleted")
+    try:
+        room = models.Room.objects.get(pk=room_pk)
+        if room.host.pk != user.pk:
+            messages.error(request, "Can't delete this room")
+        else:
+            models.Room.objects.filter(pk=room_pk).delete()
+            return redirect(reverse("core:home"))
+    except models.Room.DoesNotExist:
+        return redirect(reverse("core:home"))
+
+
 class EditPhotoView(user_mixins.LoggedInOnlyView, SuccessMessageMixin, UpdateView):
     model = models.Photo
     template_name = "rooms/photo_edit.html"
