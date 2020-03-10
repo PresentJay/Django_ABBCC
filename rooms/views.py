@@ -178,6 +178,7 @@ def delete_photo(request, room_pk, photo_pk):
 def delete_room(request, room_pk):
     user = request.user
     messages.error(request, "room deleted")
+    print(room_pk)
     try:
         room = models.Room.objects.get(pk=room_pk)
         if room.host.pk != user.pk:
