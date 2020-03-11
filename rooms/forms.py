@@ -40,3 +40,43 @@ class CreatePhotoForm(forms.ModelForm):
         room = models.Room.objects.get(pk=pk)
         photo.room = room
         photo.save()
+
+
+class CreateRoomForm(forms.ModelForm):
+    """Form definition for CreateRoom."""
+
+    class Meta:
+        """Meta definition for CreateRoomform."""
+
+        model = models.Room
+        fields = (
+            "name",
+            "description",
+            "country",
+            "city",
+            "price",
+            "address",
+            "guests",
+            "beds",
+            "bedrooms",
+            "baths",
+            "check_in",
+            "check_out",
+            "instant_book",
+            "room_type",
+            "amenities",
+            "facilities",
+            "house_rules",
+        )
+
+    # processing in frontend (if you can't get the user )
+    def save(self, *args, **kwargs):
+        room = super().save(commit=False)
+        return room
+
+    # processing in backend (if you can get the user)
+    # """ def save(self, user, *args, **kwargs):
+    #     room = super().save(commit=False)
+    #     room.host = user
+    #     room.save() """
+
