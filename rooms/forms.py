@@ -71,7 +71,10 @@ class CreateRoomForm(forms.ModelForm):
 
     # processing in frontend (if you can't get the user )
     def save(self, *args, **kwargs):
-        room = super().save(commit=False)
+        room = super().save(
+            commit=False
+        )  # if you setting save options with 'commit=False',
+        # you can not save many to many fields.
         return room
 
     # processing in backend (if you can get the user)
