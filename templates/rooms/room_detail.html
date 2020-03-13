@@ -97,6 +97,12 @@
         <a href="{% url 'rooms:edit' room.pk %}" class="btn-link block mb-5 bg-teal-500">Edit Room</a>
         <button class="modal-open btn-link bg-red-600">Delete Room</button>
         {% include 'mixins/room-delete-modal.html' with room=room.pk %}
+        {% else %}
+
+        {% if not request.session.is_hosting %}
+        Calendar
+        {% endif %}
+
 
         {% endif %}
 
