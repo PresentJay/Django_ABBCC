@@ -39,7 +39,7 @@ class Calendar(calendar.Calendar):
         weeks = self.monthdays2calendar(self.year, self.month)
         days = []
         for week in weeks:
-            for day, _ in week:
+            for day, _ in week:  # unpacking tuple
                 now = timezone.now()
                 today = now.day
                 month = now.month
