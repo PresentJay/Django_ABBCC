@@ -20,6 +20,8 @@ class ReservationAdmin(admin.ModelAdmin):
         "status",
         # "in_progress",
     )
-    
-    
 
+
+@admin.register(models.BookedDay)
+class BookedDayAdmin(admin.ModelAdmin):
+    pass
