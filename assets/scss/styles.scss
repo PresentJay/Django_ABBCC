@@ -130,4 +130,8 @@ body.modal-active {
     overflow-y: visible !important;
 }
 
+.cal-number {
+    @apply w-full text-center rounded p-1 cursor-pointer;
+}
+
 @tailwind utilities;
