@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load capitals %}
 
 {% block page_title %}
 {{room.name}}
@@ -98,7 +99,7 @@
         <button class="modal-open btn-link bg-red-600">Delete Room</button>
         {% include 'mixins/room-delete-modal.html' with room=room.pk %}
         {% else %}
-
+        {{'something'|capitals}}
         {% if not request.session.is_hosting %}
 
         {% for calendar in room.get_calendars %}
