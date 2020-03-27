@@ -138,13 +138,3 @@ class Room(core_models.TimeStampedModel):
         this_month = Calendar(2019, 11)
         next_month = Calendar(2019, 12)
         return [this_month, next_month]
-
-        # now = timezone.now()
-        # this_year = now.year
-        # this_month = now.month
-        # next_month = this_month + 1
-        # if this_month == 12:
-        #     next_month = 1
-        # this_month_cal = Calendar(this_year, this_month)
-        # next_month_cal = Calendar(this_year, next_month)
-        # return [this_month_cal, next_month_cal]
