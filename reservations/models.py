@@ -58,6 +58,7 @@ class Reservation(core_models.TimeStampedModel):
     is_finished.boolean = True
 
     def save(self, *args, **kwargs):
+        # this condition garentees that True object is new.
         if self.pk is None:
             start = self.check_in
             end = self.check_out
