@@ -30,5 +30,8 @@ def create(request, room, year, month, day):
 
 
 class ReservationDetailView(View):
-    def get(self):
-        pass
+    def get(self, pk):
+        try:
+            reservation = models.Reservation.objects.get(pk=pk)
+        except models.Reservation.DoesNotExists:
+            pass

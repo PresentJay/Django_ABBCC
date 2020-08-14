@@ -11,5 +11,6 @@ class TimeStampedModel(models.Model):
     updated = models.DateTimeField(auto_now=True)
 
     class Meta:
+
         abstract = True  # abstract Model setting
 

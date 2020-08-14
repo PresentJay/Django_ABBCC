@@ -227,3 +227,4 @@ class CreateRoomView(user_mixins.LoggedInOnlyView, FormView):
         form.save_m2m()
         messages.success(self.request, "Room uploaded")
         return redirect(reverse("rooms:detail", kwargs={"pk": room.pk}))
+

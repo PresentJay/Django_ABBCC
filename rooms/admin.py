@@ -98,7 +98,7 @@ class RoomAdmin(admin.ModelAdmin):
         return obj.amenities.count()
 
     #    count_amenities.short_description = "hello sexy!"
-    #       above functio modify field discription.
+    #       above function modify field discription.
 
     def count_photos(self, obj):
         return obj.photos.count()
